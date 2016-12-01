@@ -140,5 +140,4 @@ public class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         }
         return (T) view;
     }
-
 }

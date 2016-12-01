@@ -15,16 +15,25 @@ import cn.com.earth.adapter.animation.LoadMoreView;
  * 时间:  16/11/30 下午9:38
  */
 
-public class VmRecyclerAdapter extends AbsRecyclerAdapter<BaseViewHolder> {
+public class VmRecyclerAdapter extends AbsRecyclerAdapter<BaseViewHolder> implements ILoadingMore {
     /**
      * manager ViewMode
      */
     private VmRecyclerAdapterHelper adapterHelper;
 
     protected boolean mLoadMoreEnabled = false;
+    protected boolean nextLoadMoreEnabled = true;
+    protected ILoadingMore loadingMoreController;
 
     public VmRecyclerAdapter(AbsViewMode... viewModes) {
         this.adapterHelper = new VmRecyclerAdapterHelper(this, viewModes);
+        this.loadingMoreController = adapterHelper.getLoadingMoreController();
+    }
+
+    public void addViewModle(AbsViewMode viewMode) {
+        adapterHelper.addViewModel(viewMode);
+        this.loadingMoreController = adapterHelper.getLoadingMoreController();
+        notifyItemRangeInserted(adapterHelper.getItemCount() - viewMode.getDataItemCount(), adapterHelper.getItemCount());
     }
 
     /**
@@ -102,17 +111,16 @@ public class VmRecyclerAdapter extends AbsRecyclerAdapter<BaseViewHolder> {
 
     // load more controller
     private void onAutoLoadMore(AbsViewMode viewMode, int viewPosition, int dataPos) {
-        if (mLoadMoreEnabled) {
+        if (mLoadMoreEnabled && nextLoadMoreEnabled) {
             if ((viewMode.getDataItemType(dataPos) - adapterHelper.getLastStartType()) == LOADING_VIEW) {
                 if (onVmLoadMoreListener != null) {
                     onVmLoadMoreListener.onLoadMore();
 
-                    if (viewMode instanceof LoadMoreViewModel){
-                        ((LoadMoreViewModel)viewMode).setmLoadMoreStatus(LoadMoreView.STATUS_LOADING);
+                    if (loadingMoreController != null) {
+                        loadingMoreController.setLoadStatus(LoadMoreView.STATUS_LOADING);
                     }
                 }
             }
-            adapterHelper.getViewModeByPos(viewPosition);
         }
     }
 
@@ -120,13 +128,72 @@ public class VmRecyclerAdapter extends AbsRecyclerAdapter<BaseViewHolder> {
 
     public void setOnVmLoadMoreListener(OnVmLoadMoreListener onVmLoadMoreListener) {
         this.onVmLoadMoreListener = onVmLoadMoreListener;
+        this.nextLoadMoreEnabled = true;
     }
 
-    public void setmLoadMoreEnabled(boolean mLoadMoreEnabled) {
-        this.mLoadMoreEnabled = mLoadMoreEnabled;
+    @Override
+    public void loadmoreEnd() {
+        if (loadingMoreController != null) {
+            nextLoadMoreEnabled = false;
+            loadingMoreController.loadmoreEnd();
+        }
+    }
+
+    @Override
+    public void loadmoreCompleted() {
+        if (loadingMoreController != null) {
+            loadingMoreController.loadmoreCompleted();
+        }
+    }
+
+    @Override
+    public void loadFailed() {
+        if (loadingMoreController != null) {
+            nextLoadMoreEnabled = false;
+            loadingMoreController.loadFailed();
+        }
+    }
+
+    @Override
+    public void startLoading() {
+        if (loadingMoreController != null) {
+            loadingMoreController.startLoading();
+        }
+    }
+
+    @Override
+    public void setLoadEndGone(boolean isGone) {
+        if (loadingMoreController != null) {
+            loadingMoreController.setLoadEndGone(isGone);
+        }
+    }
+
+    @Override
+    public void setLoadmoreEnable(boolean enabled) {
+        this.mLoadMoreEnabled = enabled;
+        if (enabled){
+            this.nextLoadMoreEnabled = true;
+        }
+        loadingMoreController.setLoadmoreEnable(enabled);
+    }
+
+    @Override
+    public void setLoadStatus(int status) {
+        if (loadingMoreController != null) {
+            loadingMoreController.setLoadStatus(status);
+        }
+    }
+
+    public void clear() {
+        adapterHelper.clear();
     }
 
     public interface OnVmLoadMoreListener {
         void onLoadMore();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

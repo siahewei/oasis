@@ -1,5 +1,6 @@
 package cn.com.oasis.base.adapter.demo.vmdemo;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 
 import cn.com.earth.vm.LoadMoreViewModel;
@@ -34,33 +35,56 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(vmAdapter);
-        recyclerView.postDelayed(new Runnable() {
+        vmAdapter.setLoadmoreEnable(false);
+
+        refreshLayout.setEnabled(true);
+        recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                entityMode.addAll(DataServer.getList("jacky", 100, true));
+                refreshLayout.setRefreshing(true);
             }
-        }, 1000);
+        });
 
-        recyclerView.postDelayed(new Runnable() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void run() {
-                taskMode.addAll(DataServer.getTask("task", 200, true));
-                vmAdapter.setmLoadMoreEnabled(true);
-                moreViewModel.setEnabled(true);
+            public void onRefresh() {
+                onFresh();
             }
-        }, 500);
-
+        });
         vmAdapter.setOnVmLoadMoreListener(new VmRecyclerAdapter.OnVmLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        taskMode.addAll(DataServer.getTask("ccc", 100, true));
-                        moreViewModel.loadMoreEnd();
+                        taskMode.addAll(DataServer.getTask("ccc", 10, true));
+                        vmAdapter.loadFailed();
+                        refreshLayout.setEnabled(true);
                     }
                 }, 1000);
             }
         });
+
+        onFresh();
+    }
+
+    protected void onFresh() {
+        vmAdapter.clear();
+        vmAdapter.setLoadmoreEnable(false);
+        recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                entityMode.addAll(DataServer.getList("jacky", 20, true));
+            }
+        }, 1000);
+
+        recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                taskMode.addAll(DataServer.getTask("task", 20, true));
+                vmAdapter.setLoadmoreEnable(true);
+                refreshLayout.setRefreshing(false);
+            }
+        }, 2000);
     }
 }

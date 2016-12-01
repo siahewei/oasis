@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.com.oasis.base.utils.LogUtils;
 
 
 /**
@@ -80,8 +79,8 @@ public class JavaRequestParem extends RequestParem {
             url = url.substring(0, url.length() - 1);
         }
 
-        LogUtils.d("api getUrl", url);
-        LogUtils.d("api body", bodyParem.toString());
+//        LogUtils.d("api getUrl", url);
+//        LogUtils.d("api body", bodyParem.toString());
         return url;
     }
 

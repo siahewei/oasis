@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true" >
 
-            <cn.com.oasis.base.widget.loadview.AppProgressBar
+            <cn.com.earth.widget.loadview.AppProgressBar
                 android:id="@+id/cst_wait_dialog_progressBar"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"

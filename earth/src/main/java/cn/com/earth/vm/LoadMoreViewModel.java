@@ -11,7 +11,8 @@ import cn.com.earth.adapter.animation.LoadMoreView;
  * 时间:  16/12/1 下午4:19
  */
 
-public class LoadMoreViewModel extends AbsViewMode<LoadMoreViewModel.LoadMoreBean, BaseViewHolder<LoadMoreViewModel.LoadMoreBean>> {
+public class LoadMoreViewModel extends AbsViewMode<LoadMoreViewModel.LoadMoreBean,
+        BaseViewHolder<LoadMoreViewModel.LoadMoreBean>> implements ILoadingMore {
     public final static int LOADING_VIEW = IViewModelPosCalculator.LOADING_VIEW;
 
     LoadMoreView loadMoreView = new DefaultLoadMoreView();
@@ -34,17 +35,9 @@ public class LoadMoreViewModel extends AbsViewMode<LoadMoreViewModel.LoadMoreBea
         return loadMoreView.getLayoutId();
     }
 
-    public void loadMoreComplete() {
-        loadMoreView.setmLoadMoreStatus(LoadMoreView.STATUS_DEFAULT);
-        observer.notifyDataChanged();
-    }
 
-    public void startLoading() {
-        loadMoreView.setmLoadMoreStatus(LoadMoreView.STATUS_DEFAULT);
-        observer.notifyDataChanged();
-    }
-
-    public void loadMoreEnd() {
+    @Override
+    public void loadmoreEnd() {
         if (loadMoreView.isLoadEndGone()) {
             observer.notifyItemRemoved(list.size());
         } else {
@@ -53,11 +46,30 @@ public class LoadMoreViewModel extends AbsViewMode<LoadMoreViewModel.LoadMoreBea
         }
     }
 
-    public void setEnableLoadMore(boolean isGone) {
+    @Override
+    public void loadmoreCompleted() {
+        loadMoreView.setmLoadMoreStatus(LoadMoreView.STATUS_DEFAULT);
+        observer.notifyDataChanged();
+    }
+
+    @Override
+    public void loadFailed() {
+        loadMoreView.setmLoadMoreStatus(LoadMoreView.STATUS_FAIL);
+        observer.notifyDataChanged();
+    }
+
+    @Override
+    public void startLoading() {
+
+    }
+
+    @Override
+    public void setLoadEndGone(boolean isGone) {
         loadMoreView.setLoadEndGone(isGone);
     }
 
-    public void setEnabled(boolean enabled) {
+    @Override
+    public void setLoadmoreEnable(boolean enabled) {
         if (!enabled) {
             if (!list.isEmpty()) {
                 remove(0);
@@ -70,7 +82,8 @@ public class LoadMoreViewModel extends AbsViewMode<LoadMoreViewModel.LoadMoreBea
         }
     }
 
-    public void setmLoadMoreStatus(int status) {
+    @Override
+    public void setLoadStatus(int status) {
         loadMoreView.setmLoadMoreStatus(status);
     }
 

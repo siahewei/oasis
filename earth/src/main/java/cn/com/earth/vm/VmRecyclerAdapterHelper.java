@@ -21,7 +21,9 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
     /**
      * viewType divider
      */
-    protected Integer DIVIDER = 3;
+    protected static Integer DIVIDER_MIN = 3;
+    protected static Integer DIVIDER = 3;
+    protected ILoadingMore loadingMoreController;
 
     /**
      * index view mode, only support cache in constructor of adapter
@@ -39,11 +41,18 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
     public VmRecyclerAdapterHelper(VmRecyclerAdapter adapter, AbsViewMode... viewModes) {
         this.adapter = adapter;
         List<AbsViewMode> viewModeList = new ArrayList<>(Arrays.asList(viewModes));
-        DIVIDER = Integer.MAX_VALUE / (DIVIDER + viewModeList.size() * 2);
+        DIVIDER = Integer.MAX_VALUE / (DIVIDER_MIN + viewModeList.size() * 2);
 
         for (int i = 0; i < viewModeList.size(); i++) {
             addViewMode(viewModeList.get(i), i);
         }
+    }
+
+    /**
+     * @param absViewMode
+     */
+    public void addViewModel(AbsViewMode absViewMode) {
+        addViewMode(absViewMode, viewModes.size() - 1);
     }
 
     /**
@@ -66,6 +75,9 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
      * @param index
      */
     private void addViewMode(AbsViewMode viewMode, int index) {
+        if (viewMode instanceof ILoadingMore) {
+            loadingMoreController = (ILoadingMore) viewMode;
+        }
         viewModes.put(index, viewMode);
         viewMode.setListener(this);
         viewMode.setStartViewType(index * DIVIDER);
@@ -124,6 +136,19 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
             }
         }
         return null;
+    }
+
+    public void clear() {
+        // 遍历
+        Iterator tit = viewModes.entrySet().iterator();
+        int count = 0;
+        AbsViewMode ret = null;
+        while (tit.hasNext()) {
+            Map.Entry e = (Map.Entry) tit.next();
+            ret = (AbsViewMode) e.getValue();
+            ret.clear();
+
+        }
     }
 
     /**
@@ -232,11 +257,15 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
         adapter.notifyDataSetChanged();
     }
 
-    public int getLastStartType(){
-        if (viewModes.isEmpty()){
+    public int getLastStartType() {
+        if (viewModes.isEmpty()) {
             return 0;
-        }else {
+        } else {
             return DIVIDER * (viewModes.size() - 1);
         }
+    }
+
+    public ILoadingMore getLoadingMoreController() {
+        return loadingMoreController;
     }
 }

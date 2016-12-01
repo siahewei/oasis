@@ -36,7 +36,6 @@ import cn.com.oasis.base.net.ionnet.exception.NoDataException;
 import cn.com.oasis.base.net.ionnet.exception.ServerException;
 import cn.com.oasis.base.net.ionnet.exception.ServerTokenException;
 import cn.com.oasis.base.net.ionnet.request.RequestListner;
-import cn.com.oasis.base.utils.LogUtils;
 
 /**
  * @author jackyhe
@@ -149,7 +148,7 @@ public class IonNetInterface implements NetInterface {
      */
     private FutureBuilder handlerParems(RequestParem requestParem){
 
-        LogUtils.d(requestParem.toString());
+//        LogUtils.d(requestParem.toString());
 
         Map<String,String> headerParams = requestParem.getMapHeader();
         Map<String,Object> mapParameter = requestParem.getMapParems();
@@ -179,7 +178,7 @@ public class IonNetInterface implements NetInterface {
         if(mapParameter!=null&&mapParameter.size()>0){
             if(jsonParem){
 
-                LogUtils.e("JAVAPAREM","url:"+requestParem.getUrl()+"\nheader:"+requestParem.getMapHeader()+"\nbody"+RequestParem.toJsonFormMap(mapParameter));
+//                LogUtils.e("JAVAPAREM","url:"+requestParem.getUrl()+"\nheader:"+requestParem.getMapHeader()+"\nbody"+RequestParem.toJsonFormMap(mapParameter));
                 return b.setStringBody(RequestParem.toJsonFormMap(mapParameter));
 
             } if(fileParem){
@@ -227,7 +226,7 @@ public class IonNetInterface implements NetInterface {
                     }
                 }
 
-                LogUtils.e("onCompleted() called with " + "class:"+requestListner.getClazz().getSimpleName()+"exception = [" + exception + "], response = [" + response + "]");
+//                LogUtils.e("onCompleted() called with " + "class:"+requestListner.getClazz().getSimpleName()+"exception = [" + exception + "], response = [" + response + "]");
                 ResultMessage resultMessage = null;
                 if(null==exception){
                     if(response!=null&&response.length()>0){
@@ -287,7 +286,6 @@ public class IonNetInterface implements NetInterface {
                         e.printStackTrace();
                         resultMessage = ResultMessage.error(ResultMessage.ERROR_DATA, e);
                     } catch (Exception e) {
-                        LogUtils.e("hw----------", e);
                         resultMessage = ResultMessage.error(ResultMessage.ERROR_UI, "数据处理异常", e);
                     } finally {
                         requestListner.onEnd(resultMessage == null ? ResultMessage.success() : resultMessage);

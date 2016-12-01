@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.com.oasis.base.utils.LogUtils;
 
 
 /**
@@ -70,7 +69,6 @@ public class RequestParem implements INET {
 
 
     public String getUrl() {
-        LogUtils.d("url:"+url);
         return url;
     }
 
