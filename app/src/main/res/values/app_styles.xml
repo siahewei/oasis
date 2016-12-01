@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BaseFadeAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/app_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/app_fade_out</item>
+    </style>
+</resources>

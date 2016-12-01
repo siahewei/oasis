@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="app_top_banner_bg">#ffffff</color>
+    <color name="app_bg">#ffffff</color>
+    <color name="app_top_banner_txt">#000000</color>
+    <color name="blue_4287e6">#4287e6</color>
+    <color name="blue_2986df">#2986df</color>
+    <color name="gray_333333">#333333</color>
+
+    <color name="sfw_red">#d62d20</color>
+    <color name="sfw_blue">#0057e7</color>
+    <color name="sfw_green">#008744</color>
+    <color name="sfw_yellow">#ffa700</color>
+
+
+    <color name="gray_dddddd">#dddddd</color>
+
+    <color name="halftransparent_black">#80000000</color>
+</resources>

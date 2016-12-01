@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_get"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="get请求"
+            android:background="@drawable/selector_item_bg"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_get_user"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/selector_item_bg"
+            android:text="get json 请求"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_get_list"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="get  list请求"
+            android:background="@drawable/selector_item_bg"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_get_type"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/selector_item_bg"
+            android:text="get type 请求"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_post_json"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="POST json 请求"
+            android:background="@drawable/selector_item_bg"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_post_string"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/selector_item_bg"
+            android:text="post string请求"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_post_file"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="上传文件请求"
+            android:gravity="center"
+            android:background="@drawable/selector_item_bg"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_post_url"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:text="load 下载文件请求"
+            android:background="@drawable/selector_item_bg"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
