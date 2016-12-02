@@ -4,7 +4,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 
 import cn.com.earth.vm.LoadMoreViewModel;
+import cn.com.earth.vm.RecyclerSpace;
 import cn.com.earth.vm.VmRecyclerAdapter;
+import cn.com.oasis.R;
 import cn.com.oasis.demo.DataServer;
 
 /**
@@ -45,6 +47,8 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
             }
         });
 
+        recyclerView.addItemDecoration(new RecyclerSpace((int) getResources().getDimension(R.dimen.q10)));
+
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -57,7 +61,7 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        taskMode.addAll(DataServer.getTask("ccc", 10, true));
+                        //taskMode.addAll(DataServer.getTask("ccc", 10, true));
                         vmAdapter.loadFailed();
                         refreshLayout.setEnabled(true);
                     }
