@@ -1,4 +1,4 @@
-package cn.com.earth.vm;
+package cn.com.earth.adapter.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
