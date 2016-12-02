@@ -19,7 +19,7 @@ public class VmRecyclerAdapter extends AbsRecyclerAdapter<BaseViewHolder> implem
     /**
      * manager ViewMode
      */
-    private VmRecyclerAdapterHelper adapterHelper;
+    protected VmRecyclerAdapterHelper adapterHelper;
 
     protected boolean mLoadMoreEnabled = false;
     protected boolean nextLoadMoreEnabled = true;

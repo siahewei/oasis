@@ -18,7 +18,7 @@ import cn.com.earth.adapter.BaseViewHolder;
  * 时间:  16/11/30 下午9:28
  */
 
-public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IVmDataSet<T> {
+public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IVmDataSet<T>{
     /**
      * divider of viewType
      */
@@ -136,4 +136,6 @@ public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IV
         View view = getItemView(getLayoutId(viewTypeInVieMode), parent);
         return new BaseViewHolder<>(view);
     }
+
+
 }
