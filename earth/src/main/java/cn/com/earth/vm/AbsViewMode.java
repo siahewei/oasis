@@ -1,6 +1,7 @@
 package cn.com.earth.vm;
 
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import cn.com.earth.adapter.BaseViewHolder;
  * 时间:  16/11/30 下午9:28
  */
 
-public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IVmDataSet<T>{
+public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IVmDataSet<T> {
     /**
      * divider of viewType
      */
@@ -130,7 +131,9 @@ public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IV
         return layoutInflater.inflate(layoutResId, parent, false);
     }
 
-    protected abstract @LayoutRes int getLayoutId(int viewTypeInVieMode);
+    protected abstract
+    @LayoutRes
+    int getLayoutId(int viewTypeInVieMode);
 
     protected BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewTypeInVieMode) {
         View view = getItemView(getLayoutId(viewTypeInVieMode), parent);
@@ -138,4 +141,21 @@ public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IV
     }
 
 
+    private View headerViewIfSupport;
+
+    public boolean hasStickHeader() {
+        return false;
+    }
+
+    public View getHeaderView(ViewGroup viewGroup, int headerViewTag, int viewPos) {
+        return null;
+    }
+
+    public void setHeaderView(int headerViewTag, RecyclerView parent, View headerView) {
+        headerViewIfSupport = headerView;
+    }
+
+    public boolean isHeaderPosition(int dataPos){
+        return false;
+    }
 }

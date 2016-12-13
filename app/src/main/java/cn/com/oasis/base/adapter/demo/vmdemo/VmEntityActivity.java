@@ -3,8 +3,10 @@ package cn.com.oasis.base.adapter.demo.vmdemo;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 
-import cn.com.earth.vm.LoadMoreViewModel;
 import cn.com.earth.adapter.decoration.RecyclerSpace;
+import cn.com.earth.adapter.decoration.StickyDecoration;
+import cn.com.earth.vm.LoadMoreViewModel;
+import cn.com.earth.vm.StickyAdapter;
 import cn.com.earth.vm.VmRecyclerAdapter;
 import cn.com.oasis.R;
 import cn.com.oasis.demo.DataServer;
@@ -17,7 +19,7 @@ import cn.com.oasis.demo.DataServer;
  */
 
 public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivity {
-    protected VmRecyclerAdapter vmAdapter;
+    protected StickyAdapter vmAdapter;
     private VmEntityMode entityMode;
     private VmTaskMode taskMode;
     private GridLayoutManager layoutManager;
@@ -31,7 +33,7 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
         taskMode = new VmTaskMode();
         layoutManager = new GridLayoutManager(this, 4);
         moreViewModel = new LoadMoreViewModel();
-        vmAdapter = new VmRecyclerAdapter(entityMode, taskMode, moreViewModel);
+        vmAdapter = new StickyAdapter(entityMode, taskMode, moreViewModel);
 
         vmAdapter.setFullSpan(4);
         vmAdapter.setHasStableIds(true);
@@ -45,6 +47,8 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
                 refreshLayout.setRefreshing(true);
             }
         });
+
+        recyclerView.addItemDecoration(new StickyDecoration(vmAdapter));
 
         recyclerView.addItemDecoration(new RecyclerSpace((int) getResources().getDimension(R.dimen.q10)));
 

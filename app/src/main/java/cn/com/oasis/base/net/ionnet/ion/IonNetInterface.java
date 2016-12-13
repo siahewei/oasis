@@ -148,7 +148,7 @@ public class IonNetInterface implements NetInterface {
      */
     private FutureBuilder handlerParems(RequestParem requestParem){
 
-//        LogUtils.d(requestParem.toString());
+//        LogUtils.d(requestParem.totring());
 
         Map<String,String> headerParams = requestParem.getMapHeader();
         Map<String,Object> mapParameter = requestParem.getMapParems();

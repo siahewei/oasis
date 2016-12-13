@@ -1,6 +1,9 @@
 package cn.com.oasis.base.adapter.demo.vmdemo;
 
 
+import android.view.View;
+import android.view.ViewGroup;
+
 import cn.com.earth.adapter.BaseViewHolder;
 import cn.com.earth.vm.AbsViewMode;
 import cn.com.oasis.R;
@@ -52,5 +55,23 @@ public class VmEntityMode extends AbsViewMode<Entity, BaseViewHolder<Entity>> {
         } else {
             return R.layout.footer_item;
         }
+    }
+
+    @Override
+    public View getHeaderView(ViewGroup parent, int headerViewTag, int viewPos) {
+        if (headerViewTag == 0) {
+            BaseViewHolder viewHolder = onCreateViewHolder(parent, headerViewTag);
+            return viewHolder.itemView;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean hasStickHeader() {
+       /* if (list.isEmpty()){
+            return false;
+        }*/
+        return true;
     }
 }

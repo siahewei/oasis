@@ -2,6 +2,7 @@ package cn.com.oasis.base.adapter.demo.vmdemo;
 
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import cn.com.earth.adapter.BaseViewHolder;
@@ -62,5 +63,27 @@ public class VmTaskMode extends AbsViewMode<Task, BaseViewHolder<Task>> {
         } else {
             return R.layout.footer_item;
         }
+    }
+
+    @Override
+    public View getHeaderView(ViewGroup parent, int headerViewTag, int viewPos) {
+        if (headerViewTag == 0) {
+            BaseViewHolder viewHolder = onCreateViewHolder(parent, headerViewTag);
+            return viewHolder.itemView;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean hasStickHeader() {
+       /* if (list.isEmpty()){
+            return false;
+        }*/
+        return true;
+    }
+
+    public boolean isHeaderPosition(int dataPos){
+        return dataPos == 0;
     }
 }

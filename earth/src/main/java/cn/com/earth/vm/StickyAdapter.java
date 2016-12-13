@@ -13,17 +13,25 @@ import cn.com.earth.adapter.decoration.StickyDecoration;
  */
 
 public class StickyAdapter extends VmRecyclerAdapter implements StickyDecoration.IStickerHeaderDecoration {
+
+    public StickyAdapter(AbsViewMode... viewModes) {
+        super(viewModes);
+    }
+
     @Override
     public boolean isHeaderPosition(int position) {
-        int[] viewpos = new int[1];
-        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, viewpos);
-        return false;
+        int[] dataPos = new int[1];
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
+        return viewMode.isHeaderPosition(dataPos[0]);
     }
 
     @Override
     public boolean hasStickHeader(int position) {
+        if (adapterHelper.getItemCount() == 0) {
+            return false;
+        }
         AbsViewMode viewMode = adapterHelper.getViewModeByPos(position);
-        return false;
+        return viewMode.hasStickHeader();
     }
 
     @Override
@@ -34,12 +42,16 @@ public class StickyAdapter extends VmRecyclerAdapter implements StickyDecoration
 
     @Override
     public View getHeaderView(int position, int headerViewTag, RecyclerView parent) {
-        return null;
+        int[] dataPos = new int[1];
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
+        int viewTypeInViewMode = adapterHelper.getViewTypeInViewMode(headerViewTag);
+        return viewMode.getHeaderView(parent, viewTypeInViewMode, headerViewTag);
     }
 
     @Override
     public void setHeaderView(int position, int headerViewTag, RecyclerView parent, View headerView) {
-
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position);
+        viewMode.setHeaderView(headerViewTag, parent, headerView);
     }
 
     @Override
