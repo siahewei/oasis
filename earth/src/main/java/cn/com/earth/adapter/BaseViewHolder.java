@@ -1,6 +1,7 @@
 package cn.com.earth.adapter;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.security.SecureRandom;
 import java.util.LinkedHashSet;
 
 /**
@@ -132,12 +134,19 @@ public class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public  <T extends View> T getView(int viewId) {
+    public <T extends View> T getView(int viewId) {
         View view = views.get(viewId);
         if (view == null) {
             view = contentView.findViewById(viewId);
             views.put(viewId, view);
         }
         return (T) view;
+    }
+
+    private int getRandomColor() {
+        SecureRandom rgen = new SecureRandom();
+        return Color.HSVToColor(150, new float[]{
+                rgen.nextInt(359), 1, 1
+        });
     }
 }

@@ -4,7 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 
 import cn.com.earth.adapter.decoration.RecyclerSpace;
-import cn.com.earth.adapter.decoration.StickyDecoration;
+import cn.com.earth.adapter.decoration.VmStickyDecoration;
 import cn.com.earth.vm.LoadMoreViewModel;
 import cn.com.earth.vm.StickyAdapter;
 import cn.com.earth.vm.VmRecyclerAdapter;
@@ -40,7 +40,7 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(vmAdapter);
         vmAdapter.setLoadmoreEnable(false);
-        refreshLayout.setEnabled(true);
+        refreshLayout.setEnabled(false);
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
@@ -48,9 +48,8 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
             }
         });
 
-        recyclerView.addItemDecoration(new StickyDecoration(vmAdapter));
-
-        recyclerView.addItemDecoration(new RecyclerSpace((int) getResources().getDimension(R.dimen.q10)));
+        recyclerView.addItemDecoration(new RecyclerSpace((int) getResources().getDimension(R.dimen.q80)));
+        recyclerView.addItemDecoration(new VmStickyDecoration(vmAdapter));
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,17 +77,17 @@ public class VmEntityActivity extends cn.com.oasis.base.adapter.demo.BaseActivit
 
     protected void onFresh() {
         vmAdapter.setLoadmoreEnable(false);
-       /* recyclerView.postDelayed(new Runnable() {
+       recyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 entityMode.addAll(DataServer.getList("jacky", 20, true));
             }
-        }, 1000);*/
+        }, 1000);
 
         recyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                taskMode.addAll(DataServer.getTask("tasdadak", 20, true));
+                taskMode.addAll(DataServer.getTask("tasdadak", 100, true));
                 vmAdapter.setLoadmoreEnable(true);
                 refreshLayout.setRefreshing(false);
             }

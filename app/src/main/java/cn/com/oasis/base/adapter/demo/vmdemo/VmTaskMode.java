@@ -1,6 +1,7 @@
 package cn.com.oasis.base.adapter.demo.vmdemo;
 
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class VmTaskMode extends AbsViewMode<Task, BaseViewHolder<Task>> {
     protected void bindViewHolder(BaseViewHolder<Task> hoder, int dataPos) {
         if (list.get(dataPos).getType() == 0) {
             hoder.setText(R.id.text, list.get(dataPos).getData());
+            hoder.itemView.setAlpha(0.5f);
         } else {
             hoder.setText(R.id.footer, list.get(dataPos).getData());
         }
@@ -66,24 +68,28 @@ public class VmTaskMode extends AbsViewMode<Task, BaseViewHolder<Task>> {
     }
 
     @Override
-    public View getHeaderView(ViewGroup parent, int headerViewTag, int viewPos) {
-        if (headerViewTag == 0) {
-            BaseViewHolder viewHolder = onCreateViewHolder(parent, headerViewTag);
-            return viewHolder.itemView;
-        }else {
-            return null;
+    public View getHeaderView(RecyclerView parent, int headerViewTag, int dataPos, int viewTypeStarIntViewPos) {
+        RecyclerView.ViewHolder holder = parent.findViewHolderForAdapterPosition(viewTypeStarIntViewPos);
+        if (holder != null) {
+            return holder.itemView;
         }
+
+        return null;
+    }
+
+
+    @Override
+    public int getHeaderTag(int dataPos) {
+        return startViewType;
     }
 
     @Override
-    public boolean hasStickHeader() {
-       /* if (list.isEmpty()){
-            return false;
-        }*/
+    public boolean hasStickyHeader(int dataPos) {
         return true;
     }
 
-    public boolean isHeaderPosition(int dataPos){
-        return dataPos == 0;
+    @Override
+    public boolean isFullSpan(int dataPos) {
+        return list.get(dataPos).getType() == 0;
     }
 }

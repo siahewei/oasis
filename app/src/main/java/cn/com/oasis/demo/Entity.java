@@ -14,7 +14,7 @@ public class Entity implements Comparator<Entity>{
     public int type;
 
     public Entity(String data, int type) {
-        this.data = data;
+        this.data = data+ "dadkhakdhakdhkahdkahk";
         this.type = type;
     }
 

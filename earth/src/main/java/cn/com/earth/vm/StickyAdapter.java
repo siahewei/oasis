@@ -3,7 +3,7 @@ package cn.com.earth.vm;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import cn.com.earth.adapter.decoration.StickyDecoration;
+import cn.com.earth.adapter.decoration.IStickyHeaderDecoration;
 
 /**
  * 介绍: ${描述}
@@ -12,57 +12,43 @@ import cn.com.earth.adapter.decoration.StickyDecoration;
  * 时间:  16/12/2 上午11:40
  */
 
-public class StickyAdapter extends VmRecyclerAdapter implements StickyDecoration.IStickerHeaderDecoration {
+public class StickyAdapter extends VmRecyclerAdapter implements IStickyHeaderDecoration {
 
     public StickyAdapter(AbsViewMode... viewModes) {
         super(viewModes);
     }
 
-    @Override
-    public boolean isHeaderPosition(int position) {
-        int[] dataPos = new int[1];
-        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
-        return viewMode.isHeaderPosition(dataPos[0]);
-    }
 
     @Override
     public boolean hasStickHeader(int position) {
-        if (adapterHelper.getItemCount() == 0) {
-            return false;
-        }
-        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position);
-        return viewMode.hasStickHeader();
+
+        int[] dataPos = new int[1];
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
+        return viewMode.hasStickyHeader(dataPos[0]);
     }
+
 
     @Override
     public int getHeaderViewTag(int position, RecyclerView parent) {
-        int viewType = getItemViewType(position);
-        return viewType;
+        int[] dataPos = new int[1];
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
+        return viewMode.getHeaderTag(dataPos[0]);
     }
 
     @Override
     public View getHeaderView(int position, int headerViewTag, RecyclerView parent) {
-        int[] dataPos = new int[1];
+        int[] dataPos = new int[2];
         AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
         int viewTypeInViewMode = adapterHelper.getViewTypeInViewMode(headerViewTag);
-        return viewMode.getHeaderView(parent, viewTypeInViewMode, headerViewTag);
+        // 找到所属的vm 的第一个元素所在的view中的位置
+
+        return viewMode.getHeaderView(parent, viewTypeInViewMode, dataPos[0], dataPos[1]);
     }
 
     @Override
-    public void setHeaderView(int position, int headerViewTag, RecyclerView parent, View headerView) {
-        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position);
-        viewMode.setHeaderView(headerViewTag, parent, headerView);
-    }
-
-    @Override
-    public boolean isBeenDecorated(int lastDecoratedPosition, int nowDecoratingPosition) {
-        AbsViewMode oldVm = adapterHelper.getViewModeByPos(lastDecoratedPosition);
-        AbsViewMode newVm = adapterHelper.getViewModeByPos(nowDecoratingPosition);
-
-        if (oldVm.getClass().getName().equals(newVm.getClass().getName())) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isFullSpan(int position) {
+        int[] dataPos = new int[1];
+        AbsViewMode viewMode = adapterHelper.getViewModeByPos(position, dataPos);
+        return viewMode.isFullSpan(dataPos[0]);
     }
 }

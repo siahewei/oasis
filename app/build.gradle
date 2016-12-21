@@ -20,11 +20,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':earth')
     compile 'com.github.k0shk0sh:PermissionHelper:1.0.9'
     compile 'com.koushikdutta.ion:ion:2.1.6'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile files('libs/gegosdk.jar')
 }

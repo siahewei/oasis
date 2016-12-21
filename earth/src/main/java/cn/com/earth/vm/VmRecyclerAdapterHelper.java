@@ -177,6 +177,10 @@ public class VmRecyclerAdapterHelper implements IVmObserver {
 
             if (viewPos < count && viewPos >= preCount) {
                 dataPos[0] = viewPos - preCount;
+                if (dataPos.length == 2) {
+                    dataPos[1] = preCount;
+                }
+
                 return ret;
             }
             if (viewPos < count) {

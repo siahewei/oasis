@@ -140,22 +140,19 @@ public abstract class AbsViewMode<T, VH extends BaseViewHolder<T>> implements IV
         return new BaseViewHolder<>(view);
     }
 
-
-    private View headerViewIfSupport;
-
-    public boolean hasStickHeader() {
-        return false;
-    }
-
-    public View getHeaderView(ViewGroup viewGroup, int headerViewTag, int viewPos) {
+    public View getHeaderView(RecyclerView viewGroup, int headerViewTag, int viewPos, int viewTypeStarIntViewPos) {
         return null;
     }
 
-    public void setHeaderView(int headerViewTag, RecyclerView parent, View headerView) {
-        headerViewIfSupport = headerView;
+    public int getHeaderTag(int dataPos) {
+        return -1;
     }
 
-    public boolean isHeaderPosition(int dataPos){
+    public boolean hasStickyHeader(int dataPos) {
+        return false;
+    }
+
+    public boolean isFullSpan(int dataPos) {
         return false;
     }
 }

@@ -61,7 +61,7 @@ public class RecyclerSpace extends RecyclerView.ItemDecoration {
                     outRect.set(0, space, 0, space);
                 }
             } else {
-                outRect.set(space, space, space, space);
+                outRect.set(space/2, 0, space/2, space);
             }
         }
 
@@ -70,9 +70,10 @@ public class RecyclerSpace extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        if (parent.getLayoutManager() != null) {
-            if (parent.getLayoutManager() instanceof LinearLayoutManager && !(parent.getLayoutManager() instanceof GridLayoutManager)) {
-                if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == LinearLayoutManager.HORIZONTAL) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager != null) {
+            if (layoutManager instanceof LinearLayoutManager && !(layoutManager instanceof GridLayoutManager)) {
+                if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.HORIZONTAL) {
                     drawHorizontal(c, parent);
                 } else {
                     drawVertical(c, parent);
@@ -84,7 +85,6 @@ public class RecyclerSpace extends RecyclerView.ItemDecoration {
     }
 
     //绘制纵向 item 分割线
-
     private void drawVertical(Canvas canvas, RecyclerView parent) {
         final int top = parent.getPaddingTop();
         final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom();
@@ -112,6 +112,7 @@ public class RecyclerSpace extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+
             int top = child.getBottom() + layoutParams.bottomMargin;
             int bottom = top + space;
             if (mDivider != null) {

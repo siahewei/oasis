@@ -17,10 +17,15 @@ public class DataServer {
         List<Entity> data = new ArrayList<>();
         for (int t = 0; t < i; t++) {
             if (filter) {
-                if (t < 4) {
+                if (t < 1) {
                     data.add(new Entity(suffix + t, 0));
                 } else {
-                    data.add(new Entity(suffix + t, 1));
+
+                    if (t == 2) {
+                        data.add(new Entity(suffix + t + "dakdhakhdkahdkahdahkdhdkahdkahdkahdkahdkahdkahddkajhkdjhakdhakhdkjahdha", 2));
+                    } else {
+                        data.add(new Entity(suffix + t, 1));
+                    }
                 }
             } else {
                 data.add(new Entity(suffix + t, t));
@@ -34,7 +39,7 @@ public class DataServer {
         List<Task> data = new ArrayList<>();
         for (int t = 0; t < i; t++) {
             if (filter) {
-                if (t <10) {
+                if (t < 1) {
                     data.add(new Task(suffix + t, 0));
                 } else {
                     data.add(new Task(suffix + t, 1));

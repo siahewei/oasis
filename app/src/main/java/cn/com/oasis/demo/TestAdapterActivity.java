@@ -69,7 +69,7 @@ public class TestAdapterActivity extends Activity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.addDatas(DataServer.getList("new", 10, false));
+                        adapter.addDatas(DataServer.getList("new", 40, false));
                         adapter.loadMoreFail();
                     }
                 }, 3000);
